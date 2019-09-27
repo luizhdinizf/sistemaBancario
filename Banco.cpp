@@ -41,5 +41,22 @@
     }
   }
   void Banco::DepositarConta(int numConta, double valor, Date d){
-    Contas[numConta]->DebitarValor(valor, "Deposito",d);
+    Contas[numConta]->CreditarValor(valor, "Deposito", d);
+  }
+  void Banco::SacarConta(int numConta, double valor, Date d){
+    Contas[numConta]->DebitarValor(valor, "Saque", d);
+  }
+  void Banco::TransferirDePara(int contaOrigem,int contaDestino, double valor, Date d){
+    std::string DescricaoOrigem = "Transferência PARA conta número";
+    std::string DescricaoDestino = "Transferência DA conta número";
+    Contas[contaOrigem]->DebitarValor(valor, DescricaoOrigem, d);
+    Contas[contaDestino]->CreditarValor(valor, DescricaoDestino, d);
+  }
+
+  void Banco::CobrarTarifa(Date d){
+    std::string Descricao = "Cobrança de Tarifa";
+    double valorTarifa = 15.0;
+    for(int i = 0; i < Contas.size();i++){
+      Contas[i]->DebitarValor(valorTarifa, Descricao, d);
+    }
   }

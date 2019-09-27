@@ -139,9 +139,11 @@ int main() {
   Banco1->NovoCliente(cliente2);
   Banco1->NovaConta(cliente1);
   Banco1->NovaConta(cliente2);
+  Date * DataHoje= new Date();  
+  DataHoje->SetToday();
 
-  Conta * conta1 = new Conta(cliente1);
-  
+  //Conta * conta1 = new Conta(cliente1);
+  Conta * conta1 = Banco1->getContas()[0];
   conta1->CreditarValor(50.0,"salario");
   cout << Banco1->getClientes().back()->getNome()<< endl;
   conta1->CreditarValor(50.0,"salario");
@@ -149,6 +151,8 @@ int main() {
   Date * dataInicial = new Date(2,9,2019);
   Date * dataFinal = new Date(2,10,2019);
   std::vector<Movimentacao> mov = conta1->Extrato(*dataInicial,*dataFinal);
+  Banco1->DepositarConta(0,20,*DataHoje);
+  Banco1->TransferirDePara(0,1,20,*DataHoje);
   /*
   conta1->DebitarValor(20.0,"Casa",data1);
   conta1->DebitarValor(10.0,"Casa",data1);  

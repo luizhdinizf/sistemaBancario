@@ -21,6 +21,10 @@ public:
   void NovaConta(Cliente* cliente);
   std::string RemoverConta(int numConta);
   void DepositarConta(int numConta, double valor,Date d);
+  void SacarConta(int numConta, double valor,Date d);
+  void TransferirDePara(int contaOrigem,int contaDestino, double valor, Date d);
+  void CobrarTarifa(Date d);
+  
 };
 
 #endif
