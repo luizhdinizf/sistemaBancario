@@ -8,16 +8,31 @@
   std::string &Banco::getNome(){
     return nomeBanco;
   }
-  std::string Banco::RemoverCliente(std::string cpf_cnpj){
-    std::string nomeTemp;
+  int Banco::ProcurarPorCPF(std::string cpf_cnpj){ // retorna o numero do cliente pelo cpf
+    int numCliente = -1;
     for(int i = 0; i < Clientes.size();i++){
       if(Clientes[i]->getCpf_cnpj() == cpf_cnpj){
-        nomeTemp = Clientes[i]->getNome();
-        Clientes.erase(Clientes.begin()+i);
-        return nomeTemp;
+        numCliente = i;
+        return numCliente;
       }
+
     }
+    return numCliente;
   }
+  std::string Banco::RemoverCliente(std::string cpf_cnpj){ // BUG: Caso nao ache, vai retornar 0, resolucao, comecar NumCliente com -1, se for -1 cliente nao foi achado pelo cpf e nao apaga
+    std::string nomeTemp;
+    int numCliente = -1;
+    numCliente = ProcurarPorCPF(cpf_cnpj);
+    // if (numCliente == -1){ // Nao achou cliente NAO É NECESSARIO, uma vez que corrija-se o problema na interface
+    //   return "Nada";
+    // } else{
+      nomeTemp = Clientes[numCliente]->getNome();
+      Clientes.erase(Clientes.begin()+numCliente);
+      return nomeTemp;
+    // }
+    }
+
+
   std::vector<Cliente*> &Banco::getClientes(){
     return Clientes;
   }
@@ -46,10 +61,10 @@
   void Banco::SacarConta(int numConta, double valor, Date d){
     Contas[numConta]->DebitarValor(valor, "Saque", d);
   }
-  
+
   void Banco::TransferirDePara(int contaOrigem,int contaDestino, double valor, Date d){
-    std::string DescricaoOrigem = "Transferência PARA conta número";
-    std::string DescricaoDestino = "Transferência DA conta número";
+    std::string DescricaoOrigem = "Transferência PARA conta número "+ std::to_string(contaOrigem);
+    std::string DescricaoDestino = "Transferência DA conta número " + std::to_string(contaOrigem);
     Contas[contaOrigem]->DebitarValor(valor, DescricaoOrigem, d);
     Contas[contaDestino]->CreditarValor(valor, DescricaoDestino, d);
   }

@@ -14,6 +14,7 @@ public:
   Banco();
   Banco(std::string nB);
   std::string &getNome();
+  int ProcurarPorCPF(std::string cpf_cnpj);
   std::string RemoverCliente(std::string cpf_cnpj);
   std::vector<Cliente*> &getClientes();
   void NovoCliente(Cliente* cliente);
@@ -29,7 +30,7 @@ public:
   std::vector<Movimentacao> ExtratoMensal(int numConta);
   std::vector<Movimentacao> Extrato(int numConta,Date DataInit);
   std::vector<Movimentacao> Extrato(int numConta,Date DataInit, Date DataFinal);
-  
+
 };
 
 #endif
