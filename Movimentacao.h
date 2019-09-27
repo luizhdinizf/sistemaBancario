@@ -2,6 +2,7 @@
 #define MOVIMENTACAO_H
 #include <iostream>
 #include "Date.h"
+#include "Date.h"
 
 class Movimentacao
 {
@@ -12,7 +13,7 @@ private:
   double valor;
 public:
   Movimentacao(Date date, std::string d, char dC, double v);
-  void setdataMov(int d,int m,int y);
+  void setdataMov(int d, int m,int y);
   void setDescricao(std::string desc);
   void setDebitoCredito(char debCred);
   void setValor(double value);

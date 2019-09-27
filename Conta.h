@@ -4,6 +4,7 @@
 #include <vector>
 #include "Cliente.h"
 #include "Movimentacao.h"
+#include "Date.h"
 
 
 
@@ -17,9 +18,13 @@ private:
   static int proxNumConta;
 public:
   Conta(Cliente* c);
+  void DebitarValor(double valor,std::string desc);
+  void CreditarValor(double valor,std::string desc);
   void DebitarValor(double valor,std::string desc,Date d);
   void CreditarValor(double valor,std::string desc,Date d);
   std::vector<Movimentacao> &Extrato();
+  std::vector<Movimentacao> ExtratoMensal();
+  std::vector<Movimentacao> Extrato(Date DataInit);
   std::vector<Movimentacao> Extrato(Date DataInit, Date DataFinal);
   int getNumConta();
   double getSaldo();

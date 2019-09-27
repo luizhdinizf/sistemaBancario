@@ -18,7 +18,7 @@
       }
     }
   }
-  std::vector<Cliente*> Banco::getClientes(){
+  std::vector<Cliente*> &Banco::getClientes(){
     return Clientes;
   }
   void Banco::NovoCliente(Cliente* cliente){
@@ -40,7 +40,41 @@
       }
     }
   }
-  void Banco::DepositarConta(int numConta, int valor, Date d){
+  void Banco::DepositarConta(int numConta, double valor, Date d){
+    Contas[numConta]->CreditarValor(valor, "Deposito", d);
+  }
+  void Banco::SacarConta(int numConta, double valor, Date d){
+    Contas[numConta]->DebitarValor(valor, "Saque", d);
+  }
+  
+  void Banco::TransferirDePara(int contaOrigem,int contaDestino, double valor, Date d){
+    std::string DescricaoOrigem = "Transferência PARA conta número";
+    std::string DescricaoDestino = "Transferência DA conta número";
+    Contas[contaOrigem]->DebitarValor(valor, DescricaoOrigem, d);
+    Contas[contaDestino]->CreditarValor(valor, DescricaoDestino, d);
+  }
 
-    Contas[numConta]->DebitarValor(valor, "Deposito",d);
+  void Banco::CobrarTarifa(Date d){
+    std::string Descricao = "Cobrança de Tarifa";
+    double valorTarifa = 15.0;
+    for(int i = 0; i < Contas.size();i++){
+      Contas[i]->DebitarValor(valorTarifa, Descricao, d);
+    }
+  }
+
+  double Banco::ObterSaldo(int numConta){
+    return(Contas[numConta]->getSaldo());
+  }
+
+  std::vector<Movimentacao> Banco::ExtratoMensal(int numConta){
+    return(Contas[numConta]->ExtratoMensal());
+
+  }
+  std::vector<Movimentacao> Banco::Extrato(int numConta,Date DataInit){
+    return(Contas[numConta]->Extrato(DataInit));
+
+  }
+  std::vector<Movimentacao> Banco::Extrato(int numConta,Date DataInit, Date DataFinal){
+    return(Contas[numConta]->Extrato(DataInit,DataFinal));
+
   }
