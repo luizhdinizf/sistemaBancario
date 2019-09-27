@@ -15,7 +15,7 @@ public:
   Banco(std::string nB);
   std::string &getNome();
   std::string RemoverCliente(std::string cpf_cnpj);
-  std::vector<Cliente*> getClientes();
+  std::vector<Cliente*> &getClientes();
   void NovoCliente(Cliente* cliente);
   std::vector<Conta*> &getContas();
   void NovaConta(Cliente* cliente);
@@ -24,6 +24,11 @@ public:
   void SacarConta(int numConta, double valor,Date d);
   void TransferirDePara(int contaOrigem,int contaDestino, double valor, Date d);
   void CobrarTarifa(Date d);
+  void CobrarCPMF(Date d);
+  double ObterSaldo(int numConta);
+  std::vector<Movimentacao> ExtratoMensal(int numConta);
+  std::vector<Movimentacao> Extrato(int numConta,Date DataInit);
+  std::vector<Movimentacao> Extrato(int numConta,Date DataInit, Date DataFinal);
   
 };
 

@@ -18,7 +18,7 @@
       }
     }
   }
-  std::vector<Cliente*> Banco::getClientes(){
+  std::vector<Cliente*> &Banco::getClientes(){
     return Clientes;
   }
   void Banco::NovoCliente(Cliente* cliente){

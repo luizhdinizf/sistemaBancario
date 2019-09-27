@@ -153,6 +153,11 @@ int main() {
   std::vector<Movimentacao> mov = conta1->Extrato(*dataInicial,*dataFinal);
   Banco1->DepositarConta(0,20,*DataHoje);
   Banco1->TransferirDePara(0,1,20,*DataHoje);
+  Banco1->CobrarTarifa(*DataHoje);
+  double saldo = Banco1->ObterSaldo(0);
+  std::vector<Movimentacao> mov1 = Banco1->Extrato(0,*dataInicial);
+  std::vector<Movimentacao> mov2 = Banco1->Extrato(0,*dataInicial,*dataFinal);
+  std::vector<Movimentacao> mov3 = Banco1->ExtratoMensal(0);
   /*
   conta1->DebitarValor(20.0,"Casa",data1);
   conta1->DebitarValor(10.0,"Casa",data1);  
