@@ -40,7 +40,6 @@
       }
     }
   }
-  void Banco::DepositarConta(int numConta, int valor, Date d){
-
+  void Banco::DepositarConta(int numConta, double valor, Date d){
     Contas[numConta]->DebitarValor(valor, "Deposito",d);
   }

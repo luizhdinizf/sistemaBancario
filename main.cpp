@@ -137,14 +137,31 @@ int main() {
 
   Banco1->NovoCliente(cliente1);
   Banco1->NovoCliente(cliente2);
+  Banco1->NovaConta(cliente1);
+  Banco1->NovaConta(cliente2);
+
+  Conta * conta1 = new Conta(cliente1);
+  
+  conta1->CreditarValor(50.0,"salario");
+  cout << Banco1->getClientes().back()->getNome()<< endl;
+  conta1->CreditarValor(50.0,"salario");
+  conta1->DebitarValor(20.0,"gasto");  
+  Date * dataInicial = new Date(2,9,2019);
+  Date * dataFinal = new Date(2,10,2019);
+  std::vector<Movimentacao> mov = conta1->Extrato(*dataInicial,*dataFinal);
+  /*
+  conta1->DebitarValor(20.0,"Casa",data1);
+  conta1->DebitarValor(10.0,"Casa",data1);  
+  cout << conta1->getSaldo() << endl;
 
   cout << Banco1->getClientes().back()->getNome() <<endl;
 
-  Banco1->NovaConta(Banco1->getClientes().back());
+
   cout << Banco1->getContas()[0]->getNumConta() << endl;
   cout << "Cliente " << Banco1->RemoverCliente("123321") << " Removido"<< endl;
   cout << "Conta do cliente " << Banco1->RemoverConta(2) << " Removida"<< endl;
-  
+  */
+ /*
 
 
   
@@ -198,5 +215,6 @@ int main() {
     //
     // // accessing member function
     // obj1.printname();
+    */
     return 0;
 }

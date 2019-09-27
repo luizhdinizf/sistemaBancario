@@ -3,6 +3,7 @@
 #include <bits/stdc++.h>
 #include "Cliente.h"
 #include "Conta.h"
+#include "Date.h"
 
 class Banco{
 private:
@@ -19,7 +20,7 @@ public:
   std::vector<Conta*> &getContas();
   void NovaConta(Cliente* cliente);
   std::string RemoverConta(int numConta);
-  void DepositarConta(int numConta, int valor, Date d);
+  void DepositarConta(int numConta, double valor,Date d);
 };
 
 #endif

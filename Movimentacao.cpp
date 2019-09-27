@@ -7,7 +7,7 @@ Movimentacao::Movimentacao(Date date, std::string d, char dC, double v){
   this-> valor = v;
 }
 void Movimentacao::setdataMov(int d, int m,int y){
-  dataMov.SetDate(d,m,y);
+  this->dataMov.SetDate(d,m,y);
 }
 void Movimentacao::setDescricao(std::string desc){
   descricao = desc;
