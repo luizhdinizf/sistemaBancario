@@ -16,8 +16,6 @@ void Conta::DebitarValor(double valor,std::string desc,Date d){
 void Conta::CreditarValor(double valor,std::string desc,Date d){
   saldo = saldo + valor;
   movimentacoes.push_back(Movimentacao(d,desc,'C', valor));
-
-
 }
 std::vector<Movimentacao> &Conta::Extrato(){
   return movimentacoes; // Retorna o vector com todas as movimentacoes

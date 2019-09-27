@@ -1,11 +1,12 @@
 #include <bits/stdc++.h>
 #include <ctime>
 #include <vector>
-#include "date.h"
-#include "cliente.h"
-#include "Movimentacao.h"
-#include "Conta.h"
-#include "Banco.h"
+
+#include "Date.cpp"
+#include "Cliente.cpp"
+#include "Movimentacao.cpp"
+#include "Conta.cpp"
+#include "Banco.cpp"
 using namespace std;
 
 
@@ -127,21 +128,25 @@ int Conta::counter = 0; // inicializa valor static
 // int Interface::counter = 0; // inicializa valor static
 int main() {
   // ---===TESTE BANCO ===---
-
+  Cliente * cliente1 = new Cliente("João","54321","Rua X, n 43","23123131");
+  Cliente * cliente2 = new Cliente("Pedro","12345","Rua X, n 43","23123131");
+  //std::cout<< "Hello World" <<std::endl;
   Banco * Banco1 = new Banco("Bradesco");
-  Cliente * cliente1 = new Cliente();
-  Cliente * cliente2 = new Cliente();
+  cout << Banco1->getNome() << endl; 
+  
+
   Banco1->NovoCliente(cliente1);
-  Banco1->getClientes().back()->setNome("Carlos"); // Acessa o ultimo cliente
-  Banco1->getClientes().back()->setCpf_cnpj("123321"); // Acessa o ultimo cliente
-  Banco1->NovaConta(Banco1->getClientes().back());
   Banco1->NovoCliente(cliente2);
-  Banco1->getClientes().back()->setNome("Alberto"); // Acessa o ultimo cliente
+
   cout << Banco1->getClientes().back()->getNome() <<endl;
+
   Banco1->NovaConta(Banco1->getClientes().back());
   cout << Banco1->getContas()[0]->getNumConta() << endl;
   cout << "Cliente " << Banco1->RemoverCliente("123321") << " Removido"<< endl;
   cout << "Conta do cliente " << Banco1->RemoverConta(2) << " Removida"<< endl;
+  
+
+
   
 // ---===TESTE INTERFACE ===---
 // Banco Banco2("Bradesco");
