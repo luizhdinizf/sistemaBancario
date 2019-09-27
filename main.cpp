@@ -158,6 +158,8 @@ int main() {
   std::vector<Movimentacao> mov1 = Banco1->Extrato(0,*dataInicial);
   std::vector<Movimentacao> mov2 = Banco1->Extrato(0,*dataInicial,*dataFinal);
   std::vector<Movimentacao> mov3 = Banco1->ExtratoMensal(0);
+  std::vector<Cliente*> clientes =Banco1->getClientes();
+  std::vector<Conta*> contas = Banco1->getContas();
   /*
   conta1->DebitarValor(20.0,"Casa",data1);
   conta1->DebitarValor(10.0,"Casa",data1);  
