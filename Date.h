@@ -13,6 +13,7 @@ public:
   Date();
   Date(int d, int m, int y);
   void SetToday();
+  void VoltarSemana(Date* Dinit);
   int NumInterno();
   bool operator==(const Date& d1);
   bool InRange(Date& Dinit, Date& Dfinal);

@@ -76,7 +76,7 @@
     }
   }
   void Interface::CadastrarConta(){
-<<<<<<< HEAD
+
     if (Banco1->getClientes().size() == 0){
       std::cout << "Não há nenhuma cliente cadastrado, cadastre um cliente para ser vinculado a conta antes." << std::endl;
     } else {
@@ -89,14 +89,14 @@
       std::cout << "Conta do cliente " << Banco1->getContas()[numCliente]->getCliente()->getNome() << " criada" << std::endl;
     }
 
-=======
+
     int numCliente;
     std::cout << "Escolha o Cliente do qual a conta será criada." << std::endl;
     Interface::MostrarClientes();
     std::cin >> numCliente;
     Banco1->NovaConta(Banco1->getClientes()[numCliente]);
     std::cout << "Conta do cliente " << Banco1->getContas()[numCliente]->getCliente()->getNome() << " criada" << std::endl;
->>>>>>> 19629a5b2838fa2f7e54b423b9bdca001f0fab54
+
 
     Interface::Menu();
   }

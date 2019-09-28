@@ -1,20 +1,18 @@
 #include <bits/stdc++.h>
 #include <ctime>
 #include <vector>
-<<<<<<< HEAD
+
 #include "date.h"
 #include "cliente.h"
 #include "Movimentacao.h"
 #include "Conta.h"
 #include "Banco.h"
-=======
 
-#include "Date.cpp"
-#include "Cliente.cpp"
-#include "Movimentacao.cpp"
-#include "Conta.cpp"
-#include "Banco.cpp"
->>>>>>> 83e78aa09ce3d861e7f08d389e7eb844840adc4c
+// #include "Date.cpp"
+// #include "Cliente.cpp"
+// #include "Movimentacao.cpp"
+// #include "Conta.cpp"
+// #include "Banco.cpp"
 using namespace std;
 
 
@@ -136,7 +134,6 @@ int Conta::counter = 0; // inicializa valor static
 // int Interface::counter = 0; // inicializa valor static
 int main() {
   // ---===TESTE BANCO ===---
-<<<<<<< HEAD
 
   Banco * Banco1 = new Banco("Bradesco");
   Cliente * cliente1 = new Cliente();
@@ -152,19 +149,18 @@ int main() {
   cout << Banco1->getContas()[0]->getNumConta() << endl;
   cout << "Cliente " << Banco1->RemoverCliente("123321") << " Removido"<< endl;
   cout << "Conta do cliente " << Banco1->RemoverConta(2) << " Removida"<< endl;
-=======
   Cliente * cliente1 = new Cliente("João","54321","Rua X, n 43","23123131");
   Cliente * cliente2 = new Cliente("Pedro","12345","Rua X, n 43","23123131");
   //std::cout<< "Hello World" <<std::endl;
   Banco * Banco1 = new Banco("Bradesco");
-  cout << Banco1->getNome() << endl; 
-  
+  cout << Banco1->getNome() << endl;
+
 
   Banco1->NovoCliente(cliente1);
   Banco1->NovoCliente(cliente2);
   Banco1->NovaConta(cliente1);
   Banco1->NovaConta(cliente2);
-  Date * DataHoje= new Date();  
+  Date * DataHoje = new Date();
   DataHoje->SetToday();
 
   //Conta * conta1 = new Conta(cliente1);
@@ -172,7 +168,7 @@ int main() {
   conta1->CreditarValor(50.0,"salario");
   cout << Banco1->getClientes().back()->getNome()<< endl;
   conta1->CreditarValor(50.0,"salario");
-  conta1->DebitarValor(20.0,"gasto");  
+  conta1->DebitarValor(20.0,"gasto");
   Date * dataInicial = new Date(2,9,2019);
   Date * dataFinal = new Date(2,10,2019);
   std::vector<Movimentacao> mov = conta1->Extrato(*dataInicial,*dataFinal);
@@ -187,7 +183,7 @@ int main() {
   std::vector<Conta*> contas = Banco1->getContas();
   /*
   conta1->DebitarValor(20.0,"Casa",data1);
-  conta1->DebitarValor(10.0,"Casa",data1);  
+  conta1->DebitarValor(10.0,"Casa",data1);
   cout << conta1->getSaldo() << endl;
 
   cout << Banco1->getClientes().back()->getNome() <<endl;
@@ -201,7 +197,7 @@ int main() {
 
 
 >>>>>>> 83e78aa09ce3d861e7f08d389e7eb844840adc4c
-  
+
 // ---===TESTE INTERFACE ===---
 // Banco Banco2("Bradesco");
 // Interface teste(Banco2);
