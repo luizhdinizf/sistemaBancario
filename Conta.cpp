@@ -8,7 +8,7 @@ Conta::Conta(Cliente* c){
 
 }
 void Conta::DebitarValor(double valor,std::string desc){
-  Date * data1 = new Date();  
+  Date * data1 = new Date();
   data1->SetToday();
   if (saldo - valor >= 0){
     saldo = saldo - valor;
@@ -16,7 +16,7 @@ void Conta::DebitarValor(double valor,std::string desc){
   }
 }
 void Conta::CreditarValor(double valor,std::string desc){
-  Date * data1 = new Date();  
+  Date * data1 = new Date();
   data1->SetToday();
   saldo = saldo + valor;
   movimentacoes.push_back(Movimentacao(*data1,desc,'C', valor));
@@ -27,6 +27,10 @@ void Conta::DebitarValor(double valor,std::string desc,Date d){
     saldo = saldo - valor;
     movimentacoes.push_back(Movimentacao(d,desc,'D', valor));
   }
+}
+void Conta::DebitarValorTarifa(double valor,std::string desc,Date d){ // Excecao,
+  saldo = saldo - valor; // tarifa pode ficar com saldo negativo
+  movimentacoes.push_back(Movimentacao(d,desc,'D', valor));
 }
 void Conta::CreditarValor(double valor,std::string desc,Date d){
   saldo = saldo + valor;
@@ -46,7 +50,7 @@ std::vector<Movimentacao> Conta::Extrato(Date DataInit, Date DataFinal){
   return ExtratoVector;
 }
 std::vector<Movimentacao> Conta::Extrato(Date DataInit){
-  Date * DataFinal= new Date();  
+  Date * DataFinal= new Date();
   DataFinal->SetToday();
   std::vector<Movimentacao> ExtratoVector;
   // cout << "TAMANHO VECTOR: " << movimentacoes.size() << endl;
@@ -58,11 +62,11 @@ std::vector<Movimentacao> Conta::Extrato(Date DataInit){
   return ExtratoVector;
 }
 std::vector<Movimentacao> Conta::ExtratoMensal(){
-  Date * DataHoje= new Date();  
+  Date * DataHoje= new Date();
   DataHoje->SetToday();
   int EsseMes = DataHoje->getMonth();
   int EsseAno = DataHoje->getYear();
-  Date * DataInit= new Date(1,EsseMes,EsseAno);  
+  Date * DataInit= new Date(1,EsseMes,EsseAno);
   std::vector<Movimentacao> ExtratoVector;
   // cout << "TAMANHO VECTOR: " << movimentacoes.size() << endl;
   for (int i = 0; i < movimentacoes.size();i++){

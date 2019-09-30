@@ -21,6 +21,7 @@ public:
   void EfetuarDeposito();
   void EfetuarSaque();
   void EfetuarTransferencia();
+  void CobrarTarifa();
   void MostrarSaldo();
 };
 #endif

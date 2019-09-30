@@ -15,6 +15,7 @@
          << "5. Efetuar Deposito" << std::endl
          << "6. Efetuar Saque" << std::endl
          << "7. Efetuar Transferencia" << std::endl
+         << "8. Cobrar Tarifa" << std::endl
          << "10. Mostrar Saldo" << std::endl
          << "16. Mostrar Clientes" << std::endl
          << "17. Mostrar Contas" << std::endl
@@ -41,6 +42,9 @@
         break;
       case(7):
         Interface::EfetuarTransferencia();
+        break;
+      case(8):
+        Interface::CobrarTarifa();
         break;
       case(10):
         Interface::MostrarSaldo();
@@ -231,6 +235,22 @@ void Interface::EfetuarTransferencia(){
 
   }
 Interface::Menu();
+}
+
+void Interface::CobrarTarifa(){
+  char confirmacao;
+  std::cout << "Deseja cobrar a tarifa de R$15 para todas as contas? [S/N]: ";
+  std::cin >> confirmacao;
+  if (confirmacao == 'S'){
+    DataHoje->SetToday();
+    Banco1->CobrarTarifa(*DataHoje);
+    std::cout << "Tarifa cobrada de todas as contas" << std::endl;
+  } else if (confirmacao == 'N'){
+    std:: cout << "Tarifa nao foi cobrada, retornando ao menu..." << std::endl;
+  }
+  Interface::Menu();
+
+
 }
 
 void Interface::MostrarSaldo(){

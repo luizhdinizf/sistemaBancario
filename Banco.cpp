@@ -76,7 +76,7 @@
     std::string Descricao = "Cobrança de Tarifa";
     double valorTarifa = 15.0;
     for(int i = 0; i < Contas.size();i++){
-      Contas[i]->DebitarValor(valorTarifa, Descricao, d);
+      Contas[i]->DebitarValorTarifa(valorTarifa, Descricao, d);
     }
   }
 
