@@ -19,6 +19,8 @@ public:
   void ExcluirCliente();
   void ExcluirConta();
   void EfetuarDeposito();
+  void EfetuarSaque();
+  void EfetuarTransferencia();
   void MostrarSaldo();
 };
 #endif

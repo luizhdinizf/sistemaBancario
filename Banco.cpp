@@ -66,10 +66,10 @@
   }
 
   void Banco::TransferirDePara(int contaOrigem,int contaDestino, double valor, Date d){
-    std::string DescricaoOrigem = "Transferência PARA conta número "+ std::to_string(contaOrigem);
-    std::string DescricaoDestino = "Transferência DA conta número " + std::to_string(contaOrigem);
-    Contas[contaOrigem]->DebitarValor(valor, DescricaoOrigem, d);
-    Contas[contaDestino]->CreditarValor(valor, DescricaoDestino, d);
+    std::string DescricaoOrigem = "Transferência PARA conta número "+ std::to_string(contaDestino-1);
+    std::string DescricaoDestino = "Transferência DA conta número " + std::to_string(contaOrigem-1);
+    Contas[contaOrigem-1]->DebitarValor(valor, DescricaoOrigem, d);
+    Contas[contaDestino-1]->CreditarValor(valor, DescricaoDestino, d);
   }
 
   void Banco::CobrarTarifa(Date d){

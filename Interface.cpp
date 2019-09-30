@@ -13,6 +13,8 @@
          << "3. Excluir Cliente" << std::endl
          << "4. Excluir Conta" << std::endl
          << "5. Efetuar Deposito" << std::endl
+         << "6. Efetuar Saque" << std::endl
+         << "7. Efetuar Transferencia" << std::endl
          << "10. Mostrar Saldo" << std::endl
          << "16. Mostrar Clientes" << std::endl
          << "17. Mostrar Contas" << std::endl
@@ -33,6 +35,12 @@
         break;
       case(5):
         Interface::EfetuarDeposito();
+        break;
+      case(6):
+        Interface::EfetuarSaque();
+        break;
+      case(7):
+        Interface::EfetuarTransferencia();
         break;
       case(10):
         Interface::MostrarSaldo();
@@ -171,6 +179,58 @@
     std::cout << valor << " depositados na conta " << numConta << std::endl;
   }
   Interface::Menu();
+}
+void Interface::EfetuarSaque(){
+  int numConta;
+  double valor;
+  DataHoje->SetToday();
+  std::cout << "Digite o numero da conta para efetuar o saque:" << std::endl << "Numero:";
+  std::cin >> numConta;
+  if( (numConta > Banco1->getContas().size() ) || (numConta <= 0)    ){
+    std::cout << "Nº de conta informado não esta cadastrado na nossa base de dados, por favor insira um numero de conta válido." << std::endl;
+    Interface::Menu();
+  } else {
+  std::cout << "Quanto deseja sacar da conta " << numConta << " ?" << std::endl;
+  std::cin >> valor;
+  if(valor > Banco1->getContas()[numConta-1]->getSaldo() ){
+    std::cout << "Valor superior ao saldo da conta, saque não efetuado" <<  std::endl;
+  }else {
+    Banco1->SacarConta(numConta,valor, *DataHoje);
+    std::cout << valor << " sacados da conta " << numConta << std::endl;
+  }
+}
+Interface::Menu();
+}
+
+void Interface::EfetuarTransferencia(){
+  int numContaOrigem;
+  int numContaDestino;
+  double valor;
+  DataHoje->SetToday();
+  std::cout << "Digite o numero da conta de origem:" << std::endl << "Numero:";
+  std::cin >> numContaOrigem;
+  if( (numContaOrigem > Banco1->getContas().size() ) || (numContaOrigem <= 0)    ){
+    std::cout << "Nº da conta origem não esta cadastrado na nossa base de dados, por favor insira um numero de conta válido." << std::endl;
+    // Interface::Menu();
+  } else {
+    std::cout << "Digite o numero da conta de destino:" << std::endl << "Numero:";
+    std::cin >> numContaDestino;
+    if( (numContaDestino > Banco1->getContas().size() ) || (numContaDestino <= 0)    ){
+      std::cout << "Nº da conta destino não esta cadastrado na nossa base de dados, por favor insira um numero de conta válido." << std::endl;
+      // Interface::Menu();
+    } else {
+      std::cout << "Quanto deseja transferir para a conta " << numContaDestino << " ?" << std::endl;
+      std::cin >> valor;
+      if(valor > Banco1->getContas()[numContaOrigem-1]->getSaldo() ){
+        std::cout << "Valor superior ao saldo da conta, transferencia não efetuada" <<  std::endl;
+      }else {
+        Banco1->TransferirDePara(numContaOrigem, numContaDestino,valor ,*DataHoje);
+        std::cout << "Transferidos R$" << valor << " da conta " << numContaOrigem << " para a conta " << numContaDestino << std::endl;
+      }
+    }
+
+  }
+Interface::Menu();
 }
 
 void Interface::MostrarSaldo(){
