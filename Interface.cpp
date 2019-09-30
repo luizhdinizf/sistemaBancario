@@ -12,6 +12,8 @@
          << "2. Cadastrar nova conta" << std::endl
          << "3. Excluir Cliente" << std::endl
          << "4. Excluir Conta" << std::endl
+         << "5. Efetuar Deposito" << std::endl
+         << "10. Mostrar Saldo" << std::endl
          << "16. Mostrar Clientes" << std::endl
          << "17. Mostrar Contas" << std::endl
          << "Opcao Escolhida: ";
@@ -28,6 +30,12 @@
         break;
       case(4):
         Interface::ExcluirConta();
+        break;
+      case(5):
+        Interface::EfetuarDeposito();
+        break;
+      case(10):
+        Interface::MostrarSaldo();
         break;
       case(16):
         Interface::MostrarClientes();
@@ -146,3 +154,34 @@
     Interface::Menu();
 
   }
+
+  void Interface::EfetuarDeposito(){
+    int numConta;
+    double valor;
+    DataHoje->SetToday();
+    std::cout << "Digite o numero da conta para efetuar o deposito:" << std::endl << "Numero:";
+    std::cin >> numConta;
+    if( (numConta > Banco1->getContas().size() ) || (numConta <= 0)    ){
+      std::cout << "Nº de conta informado não esta cadastrado na nossa base de dados, por favor insira um numero de conta válido." << std::endl;
+      Interface::Menu();
+    } else {
+    std::cout << "Quanto deseja depositar na conta " << numConta << " ?" << std::endl;
+    std::cin >> valor;
+    Banco1->DepositarConta(numConta,valor, *DataHoje);
+    std::cout << valor << " depositados na conta " << numConta << std::endl;
+  }
+  Interface::Menu();
+}
+
+void Interface::MostrarSaldo(){
+  int numConta;
+  std::cout << "Digite o número da conta: ";
+  std::cin >> numConta;
+  if( (numConta > Banco1->getContas().size() ) || (numConta <= 0)    ){
+    std::cout << "Nº de conta informado não esta cadastrado na nossa base de dados, por favor insira um numero de conta válido." << std::endl;
+    Interface::Menu();
+  } else {
+  std::cout << "Saldo: R$" << Banco1->getContas()[numConta-1]->getSaldo();
+  Interface::Menu();
+  }
+}

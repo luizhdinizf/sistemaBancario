@@ -18,5 +18,7 @@ public:
   void CadastrarConta();
   void ExcluirCliente();
   void ExcluirConta();
+  void EfetuarDeposito();
+  void MostrarSaldo();
 };
 #endif
