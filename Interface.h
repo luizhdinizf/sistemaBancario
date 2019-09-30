@@ -7,6 +7,8 @@ class Interface{
 private:
   Banco* Banco1;
   static int counter;
+  Date * DataHoje = new Date();
+
 public:
   Interface(Banco *b);
   void Menu();
@@ -15,5 +17,6 @@ public:
   void MostrarContas();
   void CadastrarConta();
   void ExcluirCliente();
+  void ExcluirConta();
 };
 #endif

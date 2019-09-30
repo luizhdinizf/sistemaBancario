@@ -45,8 +45,9 @@
   void Banco::NovaConta(Cliente* cliente){
     Contas.push_back(new Conta(cliente));
   }
+
   std::string Banco::RemoverConta(int numConta){
-    std::string nomeTemp;
+    std::string nomeTemp = "-1";
     for(int i = 0; i < Contas.size();i++){
       if(Contas[i]->getNumConta() == numConta){
         nomeTemp = Contas[i]->NomeCliente();
@@ -54,12 +55,14 @@
         return nomeTemp;
       }
     }
+    // return "-1"; // retorna -1 caso nao encontre nada, o que quer dizer que nao tem nenhuma conta
+
   }
   void Banco::DepositarConta(int numConta, double valor, Date d){
-    Contas[numConta]->CreditarValor(valor, "Deposito", d);
+    Contas[numConta-1]->CreditarValor(valor, "Deposito", d);
   }
   void Banco::SacarConta(int numConta, double valor, Date d){
-    Contas[numConta]->DebitarValor(valor, "Saque", d);
+    Contas[numConta-1]->DebitarValor(valor, "Saque", d);
   }
 
   void Banco::TransferirDePara(int contaOrigem,int contaDestino, double valor, Date d){
