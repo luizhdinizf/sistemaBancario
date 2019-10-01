@@ -39,6 +39,7 @@ void Conta::CreditarValor(double valor,std::string desc,Date d){
 std::vector<Movimentacao> &Conta::Extrato(){
   return movimentacoes; // Retorna o vector com todas as movimentacoes
 }
+
 std::vector<Movimentacao> Conta::Extrato(Date DataInit, Date DataFinal){
   std::vector<Movimentacao> ExtratoVector;
   // cout << "TAMANHO VECTOR: " << movimentacoes.size() << endl;

@@ -20,6 +20,8 @@
          << "11. Obter Extrato" << std::endl
          << "16. Mostrar Clientes" << std::endl
          << "17. Mostrar Contas" << std::endl
+         << "18. Gravar Dados" << std::endl
+         << "19. Ler Dados" << std::endl
          << "Opcao Escolhida: ";
     std::cin >> selecao;
     switch(selecao){
@@ -61,7 +63,16 @@
         Interface::MostrarContas();
         Interface::Menu();
         break;
+      case(18):
+        Banco1->WriteToFile();
+        Interface::Menu();
+        break;
+      case(19):
+        Banco1->ReadFile();
+        Interface::Menu();
+        break;
     }
+
   }
   void Interface::CadastrarCliente(){
     std::string nomeCliente,cpf_cnpj,endereco,fone;
@@ -72,6 +83,9 @@
     std::cout << "Nome do cliente: ";
     std::cin.ignore();
     getline(std::cin, nomeCliente); // Usa-se essa funcao para permitir espacos
+    if(nomeCliente == ""){ // Caso o usuario nao coloqueo client, considerar um espaco para a leitura correta do arquivo
+      nomeCliente = " ";
+    }
     std::cout << "CPF ou CNPJ: ";
     std::cin >> cpf_cnpj;
     std::cout << "Endereco: ";

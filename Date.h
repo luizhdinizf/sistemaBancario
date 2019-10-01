@@ -21,7 +21,7 @@ public:
   int getMonth();
   int getYear();
   void SetDate(int d, int m, int y);
-
+  std::string StringData();
 };
 
 #endif

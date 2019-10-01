@@ -91,3 +91,7 @@ void Date::SetDate(int d, int m, int y){
   month = m;
   year = y;
 }
+std::string Date::StringData(){
+  std::string dataString = std::to_string(day) + "/" + std::to_string(month) + "/" + std::to_string(year);
+  return dataString;
+}

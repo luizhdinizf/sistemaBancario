@@ -30,6 +30,8 @@ public:
   std::vector<Movimentacao> ExtratoMensal(int numConta);
   std::vector<Movimentacao> Extrato(int numConta,Date DataInit);
   std::vector<Movimentacao> Extrato(int numConta,Date DataInit, Date DataFinal);
+  void WriteToFile();
+  void ReadFile();
 
 };
 

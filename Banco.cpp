@@ -94,5 +94,61 @@
   }
   std::vector<Movimentacao> Banco::Extrato(int numConta,Date DataInit, Date DataFinal){
     return(Contas[numConta-1]->Extrato(DataInit,DataFinal));
+}
 
+
+  void Banco::WriteToFile(){
+    std::ofstream myfile;
+    myfile.open("example.csv");
+    myfile << "sep=;" << std::endl;
+    for(int i = 0;i < Clientes.size();i++){
+      myfile << Clientes[i]->getNome() << ";"
+             << Clientes[i]->getCpf_cnpj() << ";"
+             << Clientes[i]->getEndereco() << ";"
+             << Clientes[i]->getFone() << std::endl;
+      for(int j = 0;j < Contas.size();j++){
+        if(Contas[j]->getCliente()->getCpf_cnpj() == Clientes[i]->getCpf_cnpj() ){ // se a conta estiver vinculada ao cpf anterior
+          myfile << ";"; // 1 coluna para frente
+          myfile << Contas[j]->getNumConta() << ";"
+                 << Contas[j]->getSaldo() << std::endl;
+          for(int k = 0; k < Contas[j]->Extrato().size(); k++){
+            myfile <<";;"; // 2 colunas para frente
+            myfile << Contas[j]->Extrato()[k].getDate().StringData() << ";"
+                   << Contas[j]->Extrato()[k].getDescricao() << ";"
+                   << Contas[j]->Extrato()[k].getDebitoCredito() << ";"
+                   << Contas[j]->Extrato()[k].getValor() << std::endl;
+          }
+        }
+      }
+    }
+  }
+  void Banco::ReadFile(){
+    std::ifstream myfile("example.csv");
+    std::string linha;
+    std::getline(myfile,linha);
+    std::vector <std::string> dadosCliente;
+    std::vector <std::string> dadosConta;
+    if (linha == "sep=;"){ // Checar se o separador csv é o mesmo
+      // nao fazer nada
+    }
+    std::getline(myfile,linha);
+
+    dadosCliente.clear();
+    dadosConta.clear();
+    if(linha[0] != ';'){ // A linha é um cliente, cadastra-lo
+      std::istringstream ss(linha);
+      while(ss){
+        if (!getline( ss, linha, ';' )) break;
+        dadosCliente.push_back(linha);
+      }
+      Banco::NovoCliente(new Cliente(dadosCliente[0],dadosCliente[1],dadosCliente[2],dadosCliente[3]));
+    }
+    else if( (linha[0] == ';') && (linha[1] != ';') ) {// a linha é uma conta, adiciona-la ao cliente
+
+
+    }
+
+
+
+    myfile.close();
   }
