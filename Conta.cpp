@@ -68,12 +68,13 @@ std::vector<Movimentacao> Conta::ExtratoMensal(){
   int EsseAno = DataHoje->getYear();
   Date * DataInit= new Date(1,EsseMes,EsseAno);
   std::vector<Movimentacao> ExtratoVector;
-  // cout << "TAMANHO VECTOR: " << movimentacoes.size() << endl;
+  // std::cout << " DEPURACAO TAMANHO VECTOR: " << movimentacoes.size() << std::endl;
   for (int i = 0; i < movimentacoes.size();i++){
     if (movimentacoes[i].getDate().InRange(*DataInit,*DataHoje)){ // Se a "linha" do vector, estiver dentro da range data, copiar essa "Linha" para um novo vector
       ExtratoVector.push_back(movimentacoes[i]);
     }
   }
+  // std::cout << "DEPURACAO, ANTES DO RETURN" << std::endl;
   return ExtratoVector;
 }
 

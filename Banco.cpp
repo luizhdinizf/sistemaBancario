@@ -66,8 +66,8 @@
   }
 
   void Banco::TransferirDePara(int contaOrigem,int contaDestino, double valor, Date d){
-    std::string DescricaoOrigem = "Transferência PARA conta número "+ std::to_string(contaDestino-1);
-    std::string DescricaoDestino = "Transferência DA conta número " + std::to_string(contaOrigem-1);
+    std::string DescricaoOrigem = "Transferência PARA conta número "+ std::to_string(contaDestino);
+    std::string DescricaoDestino = "Transferência DA conta número " + std::to_string(contaOrigem);
     Contas[contaOrigem-1]->DebitarValor(valor, DescricaoOrigem, d);
     Contas[contaDestino-1]->CreditarValor(valor, DescricaoDestino, d);
   }
@@ -81,18 +81,18 @@
   }
 
   double Banco::ObterSaldo(int numConta){
-    return(Contas[numConta]->getSaldo());
+    return(Contas[numConta-1]->getSaldo());
   }
 
   std::vector<Movimentacao> Banco::ExtratoMensal(int numConta){
-    return(Contas[numConta]->ExtratoMensal());
+    return(Contas[numConta-1]->ExtratoMensal());
 
   }
   std::vector<Movimentacao> Banco::Extrato(int numConta,Date DataInit){
-    return(Contas[numConta]->Extrato(DataInit));
+    return(Contas[numConta-1]->Extrato(DataInit));
 
   }
   std::vector<Movimentacao> Banco::Extrato(int numConta,Date DataInit, Date DataFinal){
-    return(Contas[numConta]->Extrato(DataInit,DataFinal));
+    return(Contas[numConta-1]->Extrato(DataInit,DataFinal));
 
   }

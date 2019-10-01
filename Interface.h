@@ -23,5 +23,6 @@ public:
   void EfetuarTransferencia();
   void CobrarTarifa();
   void MostrarSaldo();
+  void ObterExtratoMensal();
 };
 #endif

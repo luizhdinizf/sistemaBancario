@@ -17,6 +17,7 @@
          << "7. Efetuar Transferencia" << std::endl
          << "8. Cobrar Tarifa" << std::endl
          << "10. Mostrar Saldo" << std::endl
+         << "11. Obter Extrato" << std::endl
          << "16. Mostrar Clientes" << std::endl
          << "17. Mostrar Contas" << std::endl
          << "Opcao Escolhida: ";
@@ -48,6 +49,9 @@
         break;
       case(10):
         Interface::MostrarSaldo();
+        break;
+      case(11):
+        Interface::ObterExtratoMensal();
         break;
       case(16):
         Interface::MostrarClientes();
@@ -110,8 +114,13 @@
       Interface::MostrarClientes();
       std::cout << "Escolha: ";
       std::cin >> numCliente;
-      Banco1->NovaConta(Banco1->getClientes()[numCliente]);
-      std::cout << "Conta do cliente " << Banco1->getContas()[numCliente]->getCliente()->getNome() << " criada" << std::endl;
+      if (numCliente > Banco1->getClientes().size()){
+        std::cout << "Numero de Conta nao existente" << std::endl;
+      }else{
+        Banco1->NovaConta(Banco1->getClientes()[numCliente]);
+        std::cout << "Conta do cliente " << Banco1->getContas()[numCliente]->getCliente()->getNome() << " criada" << std::endl;
+      }
+
     }
 
 
@@ -261,7 +270,28 @@ void Interface::MostrarSaldo(){
     std::cout << "Nº de conta informado não esta cadastrado na nossa base de dados, por favor insira um numero de conta válido." << std::endl;
     Interface::Menu();
   } else {
-  std::cout << "Saldo: R$" << Banco1->getContas()[numConta-1]->getSaldo();
+  std::cout << "Saldo: R$" << Banco1->ObterSaldo(numConta);
   Interface::Menu();
   }
+}
+
+void Interface::ObterExtratoMensal(){
+  int numConta;
+  std::cout << "Digite o numero da conta: ";
+  std::cin >> numConta;
+  if( (numConta > Banco1->getContas().size() ) || (numConta <= 0)    ){
+    std::cout << "Nº de conta informado não esta cadastrado na nossa base de dados, por favor insira um numero de conta válido." << std::endl;
+  } else {
+    for(int i = 0; i < Banco1->ExtratoMensal(numConta).size();i++){
+      std::cout << "Data: " << Banco1->ExtratoMensal(numConta)[i].getDate().getDay()
+                << "/" << Banco1->ExtratoMensal(numConta)[i].getDate().getMonth()
+                << "/" << Banco1->ExtratoMensal(numConta)[i].getDate().getYear()
+                << " Tipo: " << Banco1->ExtratoMensal(numConta)[i].getDebitoCredito()
+                << " Valor: " << Banco1->ExtratoMensal(numConta)[i].getValor()
+                << " Descricao: " << Banco1->ExtratoMensal(numConta)[i].getDescricao() << std::endl;
+    }
+}
+  Interface::Menu();
+
+
 }
