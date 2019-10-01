@@ -125,28 +125,51 @@
   void Banco::ReadFile(){
     std::ifstream myfile("example.csv");
     std::string linha;
-    std::getline(myfile,linha);
+
     std::vector <std::string> dadosCliente;
+    int numCliente = -1; // o numero do cliente para adicionar a conta(comeca do 0)
     std::vector <std::string> dadosConta;
+    std::vector <std::string> dadosMovimentacao;
+    std::getline(myfile,linha);
     if (linha == "sep=;"){ // Checar se o separador csv é o mesmo
       // nao fazer nada
     }
-    std::getline(myfile,linha);
 
-    dadosCliente.clear();
-    dadosConta.clear();
-    if(linha[0] != ';'){ // A linha é um cliente, cadastra-lo
+
+
+
+    while(getline(myfile,linha)){
       std::istringstream ss(linha);
-      while(ss){
-        if (!getline( ss, linha, ';' )) break;
-        dadosCliente.push_back(linha);
+      dadosCliente.clear();
+      dadosConta.clear();
+      if(linha[0] != ';'){ // A linha é um cliente, cadastra-lo
+        while(ss){
+          if (!getline( ss, linha, ';' )) break;
+          dadosCliente.push_back(linha);
+        }
+        numCliente++;
+        Banco::NovoCliente(new Cliente(dadosCliente[0],dadosCliente[1],dadosCliente[2],dadosCliente[3]));
       }
-      Banco::NovoCliente(new Cliente(dadosCliente[0],dadosCliente[1],dadosCliente[2],dadosCliente[3]));
-    }
-    else if( (linha[0] == ';') && (linha[1] != ';') ) {// a linha é uma conta, adiciona-la ao cliente
+      else if( (linha[0] == ';') && (linha[1] != ';') ) {// a linha é uma conta, adiciona-la ao cliente
+        while(ss){
+          if (!getline( ss, linha, ';' )) break;
+          dadosConta.push_back(linha);
+        }
+        Banco::NovaConta(getClientes()[numCliente]);
+        numConta = dadosConta[0];
 
-
+      }
+      else if( (linha[0] == ';') && (linha[1] == ';') ) {// a linha é uma movimentacao, adiciona-la à contaOrigem
+        while(ss){
+          if (!getline( ss, linha, ';' )) break;
+          dadosMovimentacao.push_back(linha);
+        }
+        if (dadosMovimentacao.back()[2] == "D"){ // fazer uma transacao tipo deposito
+          DepositarConta(int numConta, double valor, Date d)
+        }
+      }
     }
+
 
 
 

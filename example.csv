@@ -1,2 +1,13 @@
 sep=;
-NomeTeste;CPF;ENDERECO ENDERECO;TELEFONE
+NomeTeste;CPF;END;FONE
+;1;450
+;;1/10/2019;Deposito;C;500
+;;1/10/2019;Transferência PARA conta número 2;D;50
+;2;450
+;;1/10/2019;Deposito;C;400
+;;1/10/2019;Transferência DA conta número 1;C;50
+Nome2;CPF2;End2;Fone2
+;3;300
+;;1/10/2019;Deposito;C;300
+;4;200
+;;1/10/2019;Deposito;C;200
