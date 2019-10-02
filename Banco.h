@@ -19,6 +19,7 @@ public:
   std::vector<Cliente*> &getClientes();
   void NovoCliente(Cliente* cliente);
   std::vector<Conta*> &getContas();
+  Conta *getConta(int numConta);
   void NovaConta(Cliente* cliente);
   std::string RemoverConta(int numConta);
   void DepositarConta(int numConta, double valor,Date d);

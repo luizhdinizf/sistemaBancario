@@ -65,9 +65,7 @@ std::vector<Movimentacao> Conta::Extrato(Date DataInit){
 std::vector<Movimentacao> Conta::ExtratoMensal(){
   Date * DataHoje= new Date();
   DataHoje->SetToday();
-  int EsseMes = DataHoje->getMonth();
-  int EsseAno = DataHoje->getYear();
-  Date * DataInit= new Date(1,EsseMes,EsseAno);
+  Date * DataInit= new Date(1,DataHoje->getMonth(),DataHoje->getYear());
   std::vector<Movimentacao> ExtratoVector;
   // std::cout << " DEPURACAO TAMANHO VECTOR: " << movimentacoes.size() << std::endl;
   for (int i = 0; i < movimentacoes.size();i++){

@@ -1,13 +1,14 @@
 sep=;
-NomeTeste;CPF;END;FONE
-;1;450
-;;1/10/2019;Deposito;C;500
-;;1/10/2019;Transferência PARA conta número 2;D;50
-;2;450
-;;1/10/2019;Deposito;C;400
-;;1/10/2019;Transferência DA conta número 1;C;50
-Nome2;CPF2;End2;Fone2
-;3;300
-;;1/10/2019;Deposito;C;300
-;4;200
-;;1/10/2019;Deposito;C;200
+a;123;123;3
+;1;235
+;;2/10/2019;Deposito;C;500
+;;3/10/2019;Transferência PARA conta número 2;D;250
+;;6/9/2019;Cobrança de Tarifa;D;15
+;2;110
+;;1/10/2019;Transferência DA conta número 1;C;250
+;;1/10/2019;Transferência PARA conta número 3;D;125
+;;1/10/2019;Cobrança de Tarifa;D;15
+B;A;A;S
+;3;110
+;;1/10/2019;Transferência DA conta número 2;C;125
+;;1/10/2019;Cobrança de Tarifa;D;15

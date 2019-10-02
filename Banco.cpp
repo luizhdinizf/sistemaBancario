@@ -42,6 +42,14 @@
   std::vector<Conta*> &Banco::getContas(){
     return Contas;
   }
+  Conta *Banco::getConta(int numConta){
+    for(int i = 0; i < Contas.size();i++){
+      if(numConta == Contas[i]->getNumConta()){
+        return Contas[i];
+      }
+    }
+  }
+
   void Banco::NovaConta(Cliente* cliente){
     Contas.push_back(new Conta(cliente));
   }
@@ -85,7 +93,7 @@
   }
 
   std::vector<Movimentacao> Banco::ExtratoMensal(int numConta){
-    return(Contas[numConta-1]->ExtratoMensal());
+    return(getConta(numConta)->ExtratoMensal());
 
   }
   std::vector<Movimentacao> Banco::Extrato(int numConta,Date DataInit){
@@ -100,7 +108,8 @@
   void Banco::WriteToFile(){
     std::ofstream myfile;
     myfile.open("example.csv");
-    myfile << "sep=;" << std::endl;
+    myfile  << "sep=;" << std::endl;
+    // << "ArquivoBancoELE078" << std::endl; // checar para ver se o arquivo é suportado
     for(int i = 0;i < Clientes.size();i++){
       myfile << Clientes[i]->getNome() << ";"
              << Clientes[i]->getCpf_cnpj() << ";"
@@ -126,50 +135,52 @@
     std::ifstream myfile("example.csv");
     std::string linha;
 
-    std::vector <std::string> dadosCliente;
+    char nomeCliente[100], cpfCliente[100], enderecoCliente[100],foneCliente[100];
     int numCliente = -1; // o numero do cliente para adicionar a conta(comeca do 0)
-    std::vector <std::string> dadosConta;
-    std::vector <std::string> dadosMovimentacao;
-    std::getline(myfile,linha);
-    if (linha == "sep=;"){ // Checar se o separador csv é o mesmo
-      // nao fazer nada
-    }
 
+    // Organizacao para Conta
+    int numConta, saldoConta;
+    // Organizacao para Movimentacao
+    int dia,mes,ano;
+    double valor;
+    char dc;
+    char descricao[100];
 
+    std::getline(myfile,linha); // pula o separador
 
-
-    while(getline(myfile,linha)){
-      std::istringstream ss(linha);
-      dadosCliente.clear();
-      dadosConta.clear();
-      if(linha[0] != ';'){ // A linha é um cliente, cadastra-lo
-        while(ss){
-          if (!getline( ss, linha, ';' )) break;
-          dadosCliente.push_back(linha);
+      while(getline(myfile,linha)){
+        std::cout << "LINHA: " << linha << std::endl;
+        if(linha[0] != ';'){ // A linha é um cliente, cadastra-lo
+          sscanf(linha.c_str(),"%[^;];%[^;];%[^;];%[^;]",nomeCliente,cpfCliente,enderecoCliente,foneCliente);
+          numCliente++;
+          Banco::NovoCliente(new Cliente(nomeCliente,cpfCliente,enderecoCliente,foneCliente));
         }
-        numCliente++;
-        Banco::NovoCliente(new Cliente(dadosCliente[0],dadosCliente[1],dadosCliente[2],dadosCliente[3]));
-      }
-      else if( (linha[0] == ';') && (linha[1] != ';') ) {// a linha é uma conta, adiciona-la ao cliente
-        while(ss){
-          if (!getline( ss, linha, ';' )) break;
-          dadosConta.push_back(linha);
-        }
-        Banco::NovaConta(getClientes()[numCliente]);
-        numConta = dadosConta[0];
+        else if( (linha[0] == ';') && (linha[1] != ';') ) {// a linha é uma conta, adiciona-la ao cliente
+          // std::cout << "Achou conta" << std::endl;
+          std::sscanf(linha.c_str(), ";%int;int", &numConta,&saldoConta);
+          Banco::NovaConta(getClientes().back()); // como esta feito em sequencia, a conta é pro ultimo cliente cadastrado
 
-      }
-      else if( (linha[0] == ';') && (linha[1] == ';') ) {// a linha é uma movimentacao, adiciona-la à contaOrigem
-        while(ss){
-          if (!getline( ss, linha, ';' )) break;
-          dadosMovimentacao.push_back(linha);
         }
-        if (dadosMovimentacao.back()[2] == "D"){ // fazer uma transacao tipo deposito
-          DepositarConta(int numConta, double valor, Date d)
+        else if( (linha[0] == ';') && (linha[1] == ';') ) {// a linha é uma movimentacao, adiciona-la à contaOrigem
+
+          std::sscanf(linha.c_str(),";;%d/%d/%d;%[^;];%c;%lf",&dia,&mes,&ano,descricao,&dc, &valor); // metodo separacao
+          if (dc == 'C'){ // Creditar na conta
+            getConta(numConta)->CreditarValor(valor,descricao,Date(dia,mes,ano));
+            std::cout << "Achou credito, vai entrar na conta: " << numConta  << std::endl;
+          }
+          else if (dc == 'D'){ // Debitar na conta
+            getConta(numConta)->DebitarValor(valor,descricao,Date(dia,mes,ano));
+            std::cout << "Achou debito, vai entrar na conta: " << numConta  << std::endl;
+          }
+          std::cout << "terminou movimentacao" << std::endl;
         }
       }
-    }
 
+
+
+
+
+    std::cout << "Terminou de ler" << std::endl;
 
 
 

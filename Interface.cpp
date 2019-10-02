@@ -297,9 +297,7 @@ void Interface::ObterExtratoMensal(){
     std::cout << "Nº de conta informado não esta cadastrado na nossa base de dados, por favor insira um numero de conta válido." << std::endl;
   } else {
     for(int i = 0; i < Banco1->ExtratoMensal(numConta).size();i++){
-      std::cout << "Data: " << Banco1->ExtratoMensal(numConta)[i].getDate().getDay()
-                << "/" << Banco1->ExtratoMensal(numConta)[i].getDate().getMonth()
-                << "/" << Banco1->ExtratoMensal(numConta)[i].getDate().getYear()
+      std::cout << "Data: " << Banco1->ExtratoMensal(numConta)[i].getDate().StringData()
                 << " Tipo: " << Banco1->ExtratoMensal(numConta)[i].getDebitoCredito()
                 << " Valor: " << Banco1->ExtratoMensal(numConta)[i].getValor()
                 << " Descricao: " << Banco1->ExtratoMensal(numConta)[i].getDescricao() << std::endl;

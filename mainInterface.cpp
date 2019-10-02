@@ -26,6 +26,11 @@ int main(){
   // cout << "Dia: " << Data2->getDay() << " Mes: " << Data2->getMonth() << " Ano: " << Data2->getYear() << endl;
 
 
+  // // TESTE Conta
+  // Banco * Banco1 = new Banco("Bradesco");
+  // Banco1->NovoCliente(new Cliente("nome","cpf","endereco","fone"));
+  // Banco1->NovaConta(Banco1->getClientes()[0]);
+  // cout << Banco1->getConta(1)->getCliente()->getNome();
 
   return 0;
 }
