@@ -1,14 +1,11 @@
 sep=;
-a;123;123;3
-;1;235
-;;2/10/2019;Deposito;C;500
-;;3/10/2019;Transferência PARA conta número 2;D;250
-;;6/9/2019;Cobrança de Tarifa;D;15
-;2;110
-;;1/10/2019;Transferência DA conta número 1;C;250
-;;1/10/2019;Transferência PARA conta número 3;D;125
-;;1/10/2019;Cobrança de Tarifa;D;15
-B;A;A;S
-;3;110
-;;1/10/2019;Transferência DA conta número 2;C;125
-;;1/10/2019;Cobrança de Tarifa;D;15
+Nome1;1;a;aa
+;3;5000
+;;2/10/2019;Deposito;C;5000
+Nome2;12;a;a
+;1;100
+;;2/10/2019;Transferência DA conta número 2;C;100
+Nome3;123;a;a
+;2;2400
+;;2/10/2019;Deposito;C;2500
+;;2/10/2019;Transferência PARA conta número 1;D;100

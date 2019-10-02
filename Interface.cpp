@@ -132,7 +132,7 @@
         std::cout << "Numero de Conta nao existente" << std::endl;
       }else{
         Banco1->NovaConta(Banco1->getClientes()[numCliente]);
-        std::cout << "Conta do cliente " << Banco1->getContas()[numCliente]->getCliente()->getNome() << " criada" << std::endl;
+        std::cout << "Conta do cliente " << Banco1->getContas().back()->getCliente()->getNome() << " criada" << std::endl;
       }
 
     }

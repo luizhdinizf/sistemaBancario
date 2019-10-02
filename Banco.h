@@ -21,6 +21,7 @@ public:
   std::vector<Conta*> &getContas();
   Conta *getConta(int numConta);
   void NovaConta(Cliente* cliente);
+  void NovaConta(Cliente* cliente,int numConta);
   std::string RemoverConta(int numConta);
   void DepositarConta(int numConta, double valor,Date d);
   void SacarConta(int numConta, double valor,Date d);

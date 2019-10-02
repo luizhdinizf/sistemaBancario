@@ -54,6 +54,10 @@
     Contas.push_back(new Conta(cliente));
   }
 
+  void Banco::NovaConta(Cliente* cliente,int numConta){
+    Contas.push_back(new Conta(cliente,numConta));
+  }
+
   std::string Banco::RemoverConta(int numConta){
     std::string nomeTemp = "-1";
     for(int i = 0; i < Contas.size();i++){
@@ -67,17 +71,17 @@
 
   }
   void Banco::DepositarConta(int numConta, double valor, Date d){
-    Contas[numConta-1]->CreditarValor(valor, "Deposito", d);
+    getConta(numConta)->CreditarValor(valor, "Deposito", d);
   }
   void Banco::SacarConta(int numConta, double valor, Date d){
-    Contas[numConta-1]->DebitarValor(valor, "Saque", d);
+    getConta(numConta)->DebitarValor(valor, "Saque", d);
   }
 
   void Banco::TransferirDePara(int contaOrigem,int contaDestino, double valor, Date d){
     std::string DescricaoOrigem = "Transferência PARA conta número "+ std::to_string(contaDestino);
     std::string DescricaoDestino = "Transferência DA conta número " + std::to_string(contaOrigem);
-    Contas[contaOrigem-1]->DebitarValor(valor, DescricaoOrigem, d);
-    Contas[contaDestino-1]->CreditarValor(valor, DescricaoDestino, d);
+    getConta(contaOrigem)->DebitarValor(valor, DescricaoOrigem, d);
+    getConta(contaDestino)->CreditarValor(valor, DescricaoDestino, d);
   }
 
   void Banco::CobrarTarifa(Date d){
@@ -89,7 +93,7 @@
   }
 
   double Banco::ObterSaldo(int numConta){
-    return(Contas[numConta-1]->getSaldo());
+    return(getConta(numConta)->getSaldo());
   }
 
   std::vector<Movimentacao> Banco::ExtratoMensal(int numConta){
@@ -97,11 +101,11 @@
 
   }
   std::vector<Movimentacao> Banco::Extrato(int numConta,Date DataInit){
-    return(Contas[numConta-1]->Extrato(DataInit));
+    return(getConta(numConta)->Extrato(DataInit));
 
   }
   std::vector<Movimentacao> Banco::Extrato(int numConta,Date DataInit, Date DataFinal){
-    return(Contas[numConta-1]->Extrato(DataInit,DataFinal));
+    return(getConta(numConta)->Extrato(DataInit,DataFinal));
 }
 
 
@@ -158,7 +162,7 @@
         else if( (linha[0] == ';') && (linha[1] != ';') ) {// a linha é uma conta, adiciona-la ao cliente
           // std::cout << "Achou conta" << std::endl;
           std::sscanf(linha.c_str(), ";%int;int", &numConta,&saldoConta);
-          Banco::NovaConta(getClientes().back()); // como esta feito em sequencia, a conta é pro ultimo cliente cadastrado
+          Banco::NovaConta(getClientes().back(), numConta); // como esta feito em sequencia, a conta é pro ultimo cliente cadastrado
 
         }
         else if( (linha[0] == ';') && (linha[1] == ';') ) {// a linha é uma movimentacao, adiciona-la à contaOrigem

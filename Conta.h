@@ -18,6 +18,7 @@ private:
   static int proxNumConta;
 public:
   Conta(Cliente* c);
+  Conta(Cliente* c,int nC);
   void DebitarValor(double valor,std::string desc);
   void CreditarValor(double valor,std::string desc);
   void DebitarValor(double valor,std::string desc,Date d);

@@ -7,6 +7,13 @@ Conta::Conta(Cliente* c){
   cliente = c;
 
 }
+Conta::Conta(Cliente* c,int nC){
+  saldo = 0;
+  counter++;
+  this->numConta = nC;
+  cliente = c;
+
+}
 void Conta::DebitarValor(double valor,std::string desc){
   Date * data1 = new Date();
   data1->SetToday();
