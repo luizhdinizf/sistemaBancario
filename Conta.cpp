@@ -87,7 +87,9 @@ std::vector<Movimentacao> Conta::ExtratoMensal(){
   return ExtratoVector;
 }
 
-
+void Conta::setNumConta(int nC){
+  this->numConta = nC;
+}
 int Conta::getNumConta(){
   return numConta;
 }

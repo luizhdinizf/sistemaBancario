@@ -6,9 +6,9 @@
   }
   void Interface::Menu(){
     int selecao;
-    std::cout << std::endl << std::endl << std::endl << std::endl << "---=== Banco " << Banco1->getNome() << "===---" << std::endl
+    std::cout << std::endl << "---======== Banco " << Banco1->getNome() << "========---" << std::endl
          << "Selecione a opçao desejada: " << std::endl
-         << "1. Cadastrar novo Cliente" << std::endl // implementado
+         << "1. Cadastrar novo Cliente" << std::endl
          << "2. Cadastrar nova conta" << std::endl
          << "3. Excluir Cliente" << std::endl
          << "4. Excluir Conta" << std::endl
@@ -18,7 +18,7 @@
          << "8. Cobrar Tarifa" << std::endl
          << "9. Cobrar CPMF" << std::endl
          << "10. Mostrar Saldo" << std::endl
-         << "11. Obter Extrato" << std::endl
+         << "11. Obter Extrato Mensal" << std::endl
          << "16. Mostrar Clientes" << std::endl
          << "17. Mostrar Contas" << std::endl
          << "18. Gravar Dados" << std::endl
@@ -113,16 +113,18 @@
       std::cout << i << ". " << Banco1->getClientes()[i]->getNome() << std::endl;
     }
   }
+
   void Interface::MostrarContas(){
     if (Banco1->getContas().size() == 0){
       std::cout << "Não há nenhuma conta cadastrada, cadastre uma conta antes." << std::endl;
     }
     for(int i = 0;i < Banco1->getContas().size(); i++){
-      std::cout << i + 1 << "." << Banco1->getContas()[i]->getCliente()->getNome()  << std::endl;
+      std::cout << Banco1->getContas()[i]->getNumConta() << "." << Banco1->getContas()[i]->getCliente()->getNome()  << std::endl;
     }
   }
-  void Interface::CadastrarConta(){
 
+
+  void Interface::CadastrarConta(){
     if (Banco1->getClientes().size() == 0){
       std::cout << "Não há nenhuma cliente cadastrado, cadastre um cliente para ser vinculado a conta antes." << std::endl;
       Interface::Menu();
@@ -133,18 +135,17 @@
       std::cout << "Escolha: ";
       std::cin >> numCliente;
       if (numCliente > Banco1->getClientes().size()){
-        std::cout << "Numero de Conta nao existente" << std::endl;
+        std::cout << "Numero do cliente nao existente" << std::endl;
       }else{
         Banco1->NovaConta(Banco1->getClientes()[numCliente]);
-        std::cout << "Conta do cliente " << Banco1->getContas().back()->getCliente()->getNome() << " criada" << std::endl;
+        std::cout << "Conta do cliente " << Banco1->getContas().back()->getCliente()->getNome()
+                  << " criada -> Numero da conta: " << Banco1->getContas().back()->getNumConta() << std::endl;
       }
 
     }
-
-
-
     Interface::Menu();
   }
+
   void Interface::ExcluirCliente(){
     std::string cpf;
     int indexCliente;
@@ -176,12 +177,8 @@
     std::cout << "Digite o nº da conta a ser excluido " << std::endl;
     std::cin >> numConta;
 
-    if( (numConta > Banco1->getContas().size() ) || (numConta < 0)    ){
-      std::cout << "Nº de conta informado não esta cadastrado na nossa base de dados, por favor insira um numero de conta válido." << std::endl;
-      // ExcluirCliente(); // Fica em um loop infinito caso nao tenha nenhum cliente, melhor voltar ao menu
-      Interface::Menu();
-    } else {
-      nomeConta = Banco1->getContas()[numConta-1]->getCliente()->getNome();
+    if(Banco1->ExisteConta(numConta)){
+      nomeConta = Banco1->getConta(numConta)->getCliente()->getNome();
       std::cout << "Deseja remover a conta " << numConta << " do cliente " << nomeConta << "?[S/N]" << std::endl;
       std::cin >> confirmacao;
       if(confirmacao == 'S'){
@@ -189,10 +186,15 @@
       } else {
         std::cout << "Voltando ao menu..." << std::endl;
       }
+    } else {
+      std::cout << "Nº de conta informado não esta cadastrado na nossa base de dados, por favor insira um numero de conta válido." << std::endl;
+
     }
     Interface::Menu();
 
   }
+
+
 
   void Interface::EfetuarDeposito(){
     int numConta;
@@ -200,14 +202,14 @@
     DataHoje->SetToday();
     std::cout << "Digite o numero da conta para efetuar o deposito:" << std::endl << "Numero:";
     std::cin >> numConta;
-    if( (numConta > Banco1->getContas().size() ) || (numConta <= 0)    ){
-      std::cout << "Nº de conta informado não esta cadastrado na nossa base de dados, por favor insira um numero de conta válido." << std::endl;
-      Interface::Menu();
+
+    if(Banco1->ExisteConta(numConta)){
+      std::cout << "Quanto deseja depositar na conta " << numConta << " ?" << std::endl;
+      std::cin >> valor;
+      Banco1->DepositarConta(numConta,valor, *DataHoje);
+      std::cout << valor << " depositados na conta " << numConta << std::endl;
     } else {
-    std::cout << "Quanto deseja depositar na conta " << numConta << " ?" << std::endl;
-    std::cin >> valor;
-    Banco1->DepositarConta(numConta,valor, *DataHoje);
-    std::cout << valor << " depositados na conta " << numConta << std::endl;
+      std::cout << "Nº de conta informado não esta cadastrado na nossa base de dados, por favor insira um numero de conta válido." << std::endl;
   }
   Interface::Menu();
 }
@@ -217,18 +219,18 @@ void Interface::EfetuarSaque(){
   DataHoje->SetToday();
   std::cout << "Digite o numero da conta para efetuar o saque:" << std::endl << "Numero:";
   std::cin >> numConta;
-  if( (numConta > Banco1->getContas().size() ) || (numConta <= 0)    ){
-    std::cout << "Nº de conta informado não esta cadastrado na nossa base de dados, por favor insira um numero de conta válido." << std::endl;
-    Interface::Menu();
+  if(Banco1->ExisteConta(numConta)){
+    std::cout << "Quanto deseja sacar da conta " << numConta << " ?" << std::endl;
+    std::cin >> valor;
+    if(valor > Banco1->getConta(numConta)->getSaldo() ){
+      std::cout << "Valor superior ao saldo da conta, saque não efetuado" <<  std::endl;
+    } else {
+      Banco1->SacarConta(numConta,valor, *DataHoje);
+      std::cout << valor << " sacados da conta " << numConta << std::endl;
+    }
   } else {
-  std::cout << "Quanto deseja sacar da conta " << numConta << " ?" << std::endl;
-  std::cin >> valor;
-  if(valor > Banco1->getContas()[numConta-1]->getSaldo() ){
-    std::cout << "Valor superior ao saldo da conta, saque não efetuado" <<  std::endl;
-  }else {
-    Banco1->SacarConta(numConta,valor, *DataHoje);
-    std::cout << valor << " sacados da conta " << numConta << std::endl;
-  }
+    std::cout << "Nº de conta informado não esta cadastrado na nossa base de dados, por favor insira um numero de conta válido." << std::endl;
+
 }
 Interface::Menu();
 }
@@ -240,26 +242,24 @@ void Interface::EfetuarTransferencia(){
   DataHoje->SetToday();
   std::cout << "Digite o numero da conta de origem:" << std::endl << "Numero:";
   std::cin >> numContaOrigem;
-  if( (numContaOrigem > Banco1->getContas().size() ) || (numContaOrigem <= 0)    ){
-    std::cout << "Nº da conta origem não esta cadastrado na nossa base de dados, por favor insira um numero de conta válido." << std::endl;
-    // Interface::Menu();
-  } else {
+  if(Banco1->ExisteConta(numContaOrigem)){
     std::cout << "Digite o numero da conta de destino:" << std::endl << "Numero:";
     std::cin >> numContaDestino;
-    if( (numContaDestino > Banco1->getContas().size() ) || (numContaDestino <= 0)    ){
-      std::cout << "Nº da conta destino não esta cadastrado na nossa base de dados, por favor insira um numero de conta válido." << std::endl;
-      // Interface::Menu();
-    } else {
+    if(Banco1->ExisteConta(numContaDestino)){
       std::cout << "Quanto deseja transferir para a conta " << numContaDestino << " ?" << std::endl;
       std::cin >> valor;
-      if(valor > Banco1->getContas()[numContaOrigem-1]->getSaldo() ){
+      if(valor > Banco1->getConta(numContaOrigem)->getSaldo() ){
         std::cout << "Valor superior ao saldo da conta, transferencia não efetuada" <<  std::endl;
       }else {
         Banco1->TransferirDePara(numContaOrigem, numContaDestino,valor ,*DataHoje);
         std::cout << "Transferidos R$" << valor << " da conta " << numContaOrigem << " para a conta " << numContaDestino << std::endl;
       }
-    }
+    } else {
+      std::cout << "Nº da conta destino não esta cadastrado na nossa base de dados, por favor insira um numero de conta válido." << std::endl;
 
+    }
+  } else {
+    std::cout << "Nº da conta origem não esta cadastrado na nossa base de dados, por favor insira um numero de conta válido." << std::endl;
   }
 Interface::Menu();
 }
@@ -290,31 +290,27 @@ void Interface::MostrarSaldo(){
   int numConta;
   std::cout << "Digite o número da conta: ";
   std::cin >> numConta;
-  if( (numConta > Banco1->getContas().size() ) || (numConta <= 0)    ){
-    std::cout << "Nº de conta informado não esta cadastrado na nossa base de dados, por favor insira um numero de conta válido." << std::endl;
-    Interface::Menu();
+  if(Banco1->ExisteConta(numConta)){
+    std::cout << "Saldo: R$" << Banco1->ObterSaldo(numConta);
   } else {
-  std::cout << "Saldo: R$" << Banco1->ObterSaldo(numConta);
-  Interface::Menu();
+    std::cout << "Nº de conta informado não esta cadastrado na nossa base de dados, por favor insira um numero de conta válido." << std::endl;
   }
+  Interface::Menu();
 }
 
 void Interface::ObterExtratoMensal(){
   int numConta;
   std::cout << "Digite o numero da conta: ";
   std::cin >> numConta;
-  if( (numConta > Banco1->getContas().size() ) || (numConta <= 0)    ){
-    std::cout << "Nº de conta informado não esta cadastrado na nossa base de dados, por favor insira um numero de conta válido." << std::endl;
-  } else {
-    std::cout << "Tamanho Extrato Mensal: " <<  Banco1->ExtratoMensal(numConta).size() <<std::endl;
+  if(Banco1->ExisteConta(numConta)){
     for(int i = 0; i < Banco1->ExtratoMensal(numConta).size();i++){
       std::cout << "Data: " << Banco1->ExtratoMensal(numConta)[i].getDate().StringData()
                 << " Tipo: " << Banco1->ExtratoMensal(numConta)[i].getDebitoCredito()
                 << " Valor: " << Banco1->ExtratoMensal(numConta)[i].getValor()
                 << " Descricao: " << Banco1->ExtratoMensal(numConta)[i].getDescricao() << std::endl;
     }
+  } else {
+    std::cout << "Nº de conta informado não esta cadastrado na nossa base de dados, por favor insira um numero de conta válido." << std::endl;
 }
   Interface::Menu();
-
-
 }

@@ -1,12 +1,13 @@
 sep=;
-Nome1;1;a;aa
-;3;5000
-;;2/10/2019;Deposito;C;5000
-Nome2;12;a;a
-;1;100
-;;2/10/2019;Transferência DA conta número 2;C;100
-Nome3;123;a;a
-;2;-9.5
-;;2/10/2019;Deposito;C;2500
-;;2/10/2019;Transferência PARA conta número 1;D;500
-;;2/10/2019;Transferência Automatica;D;500
+Carlos;123;1;1
+;2;383.043
+;;3/10/2019;Deposito;C;400
+;;3/10/2019;Saque;D;400
+;;3/10/2019;Deposito;C;500
+;;3/10/2019;Transferência PARA conta número 3;D;100
+;;3/10/2019;Cobrança de Tarifa;D;15
+;;3/10/2019;Cobranca CPMF;D;1.957
+;3;84.943
+;;3/10/2019;Transferência DA conta número 2;C;100
+;;3/10/2019;Cobrança de Tarifa;D;15
+;;3/10/2019;Cobranca CPMF;D;0.057

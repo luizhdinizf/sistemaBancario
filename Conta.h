@@ -28,6 +28,7 @@ public:
   std::vector<Movimentacao> ExtratoMensal();
   std::vector<Movimentacao> Extrato(Date DataInit);
   std::vector<Movimentacao> Extrato(Date DataInit, Date DataFinal);
+  void setNumConta(int nC);
   int getNumConta();
   double getSaldo();
   Cliente *getCliente();

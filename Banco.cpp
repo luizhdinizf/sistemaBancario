@@ -50,12 +50,26 @@
     }
   }
 
+
   void Banco::NovaConta(Cliente* cliente){
-    Contas.push_back(new Conta(cliente));
+    if(getContas().size() == 0){
+      Contas.push_back(new Conta(cliente,1));
+    } else {
+      Contas.push_back(new Conta(cliente,getContas().back()->getNumConta() + 1));
+    }
   }
 
   void Banco::NovaConta(Cliente* cliente,int numConta){
     Contas.push_back(new Conta(cliente,numConta));
+  }
+
+  bool Banco::ExisteConta(int numConta){
+    for(int i = 0; i <  getContas().size();i++ ){
+      if(numConta == getContas()[i]->getNumConta()){
+        return true;
+      }
+    }
+    return false;
   }
 
   std::string Banco::RemoverConta(int numConta){
@@ -132,7 +146,7 @@
 
   void Banco::WriteToFile(){
     std::ofstream myfile;
-    myfile.open("example.csv");
+    myfile.open("example.csv", std::ofstream::out | std::ofstream::trunc);
     myfile  << "sep=;" << std::endl;
     // << "ArquivoBancoELE078" << std::endl; // checar para ver se o arquivo é suportado
     for(int i = 0;i < Clientes.size();i++){
@@ -182,6 +196,7 @@
         }
         else if( (linha[0] == ';') && (linha[1] != ';') ) {// a linha é uma conta, adiciona-la ao cliente
           std::sscanf(linha.c_str(), ";%int;int", &numConta,&saldoConta);
+
           Banco::NovaConta(getClientes().back(), numConta); // como esta feito em sequencia, a conta é pro ultimo cliente cadastrado
         }
         else if( (linha[0] == ';') && (linha[1] == ';') ) {// a linha é uma movimentacao, adiciona-la à conta
