@@ -91,7 +91,28 @@
       Contas[i]->DebitarValorTarifa(valorTarifa, Descricao, d);
     }
   }
+  void Banco::CobrarCPMF(){
+    Date* DataHoje = new Date();
+    DataHoje->SetToday();
+    Date* SemanaPassada = new Date();
+    SemanaPassada->VoltarSemana(DataHoje);
+    double valorTotal = 0; // Soma todos os valores de debito para fazer o calculo
+    for(int i = 0; i < Contas.size();i++){
+      valorTotal = 0;
+      for(int j = 0; j < Contas[i]->Extrato(*SemanaPassada,*DataHoje).size();j++ ){
+        if(Contas[i]->Extrato(*SemanaPassada,*DataHoje)[j].getDebitoCredito() == 'D'){
+          valorTotal = valorTotal + Contas[i]->Extrato(*SemanaPassada,*DataHoje)[j].getValor();
+        }
+      }
+      if (valorTotal > 0){
+        valorTotal = valorTotal * 0.0038;
+        Contas[i]->DebitarValorTarifa(valorTotal, "Cobranca CPMF", *DataHoje);
+      }
 
+    }
+
+
+  }
   double Banco::ObterSaldo(int numConta){
     return(getConta(numConta)->getSaldo());
   }
@@ -153,40 +174,27 @@
     std::getline(myfile,linha); // pula o separador
 
       while(getline(myfile,linha)){
-        std::cout << "LINHA: " << linha << std::endl;
+        // std::cout << "LINHA: " << linha << std::endl;
         if(linha[0] != ';'){ // A linha é um cliente, cadastra-lo
           sscanf(linha.c_str(),"%[^;];%[^;];%[^;];%[^;]",nomeCliente,cpfCliente,enderecoCliente,foneCliente);
           numCliente++;
           Banco::NovoCliente(new Cliente(nomeCliente,cpfCliente,enderecoCliente,foneCliente));
         }
         else if( (linha[0] == ';') && (linha[1] != ';') ) {// a linha é uma conta, adiciona-la ao cliente
-          // std::cout << "Achou conta" << std::endl;
           std::sscanf(linha.c_str(), ";%int;int", &numConta,&saldoConta);
           Banco::NovaConta(getClientes().back(), numConta); // como esta feito em sequencia, a conta é pro ultimo cliente cadastrado
-
         }
-        else if( (linha[0] == ';') && (linha[1] == ';') ) {// a linha é uma movimentacao, adiciona-la à contaOrigem
-
+        else if( (linha[0] == ';') && (linha[1] == ';') ) {// a linha é uma movimentacao, adiciona-la à conta
           std::sscanf(linha.c_str(),";;%d/%d/%d;%[^;];%c;%lf",&dia,&mes,&ano,descricao,&dc, &valor); // metodo separacao
           if (dc == 'C'){ // Creditar na conta
             getConta(numConta)->CreditarValor(valor,descricao,Date(dia,mes,ano));
-            std::cout << "Achou credito, vai entrar na conta: " << numConta  << std::endl;
           }
           else if (dc == 'D'){ // Debitar na conta
             getConta(numConta)->DebitarValor(valor,descricao,Date(dia,mes,ano));
-            std::cout << "Achou debito, vai entrar na conta: " << numConta  << std::endl;
           }
-          std::cout << "terminou movimentacao" << std::endl;
         }
       }
-
-
-
-
-
     std::cout << "Terminou de ler" << std::endl;
-
-
 
     myfile.close();
   }

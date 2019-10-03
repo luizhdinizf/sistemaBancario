@@ -16,6 +16,7 @@
          << "6. Efetuar Saque" << std::endl
          << "7. Efetuar Transferencia" << std::endl
          << "8. Cobrar Tarifa" << std::endl
+         << "9. Cobrar CPMF" << std::endl
          << "10. Mostrar Saldo" << std::endl
          << "11. Obter Extrato" << std::endl
          << "16. Mostrar Clientes" << std::endl
@@ -48,6 +49,9 @@
         break;
       case(8):
         Interface::CobrarTarifa();
+        break;
+      case(9):
+        Interface::CobrarCPMF();
         break;
       case(10):
         Interface::MostrarSaldo();
@@ -276,6 +280,12 @@ void Interface::CobrarTarifa(){
 
 }
 
+void Interface::CobrarCPMF(){
+  Banco1->CobrarCPMF();
+  std::cout<< " CPMF cobrado de todas as contas" << std::endl;
+  Interface::Menu();
+}
+
 void Interface::MostrarSaldo(){
   int numConta;
   std::cout << "Digite o número da conta: ";
@@ -296,6 +306,7 @@ void Interface::ObterExtratoMensal(){
   if( (numConta > Banco1->getContas().size() ) || (numConta <= 0)    ){
     std::cout << "Nº de conta informado não esta cadastrado na nossa base de dados, por favor insira um numero de conta válido." << std::endl;
   } else {
+    std::cout << "Tamanho Extrato Mensal: " <<  Banco1->ExtratoMensal(numConta).size() <<std::endl;
     for(int i = 0; i < Banco1->ExtratoMensal(numConta).size();i++){
       std::cout << "Data: " << Banco1->ExtratoMensal(numConta)[i].getDate().StringData()
                 << " Tipo: " << Banco1->ExtratoMensal(numConta)[i].getDebitoCredito()

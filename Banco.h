@@ -27,7 +27,7 @@ public:
   void SacarConta(int numConta, double valor,Date d);
   void TransferirDePara(int contaOrigem,int contaDestino, double valor, Date d);
   void CobrarTarifa(Date d);
-  void CobrarCPMF(Date d);
+  void CobrarCPMF();
   double ObterSaldo(int numConta);
   std::vector<Movimentacao> ExtratoMensal(int numConta);
   std::vector<Movimentacao> Extrato(int numConta,Date DataInit);

@@ -22,6 +22,7 @@ public:
   void EfetuarSaque();
   void EfetuarTransferencia();
   void CobrarTarifa();
+  void CobrarCPMF();
   void MostrarSaldo();
   void ObterExtratoMensal();
 };
