@@ -5,15 +5,16 @@ Conta::Conta(Cliente* c){
   counter++;
   numConta = counter;
   cliente = c;
-
 }
+
 Conta::Conta(Cliente* c,int nC){
   saldo = 0;
   counter++;
   this->numConta = nC;
   cliente = c;
-
 }
+
+Conta::~Conta(){}
 
 void Conta::CreditarValor(double valor,std::string desc){
   Date * data1 = new Date();
@@ -72,12 +73,12 @@ std::vector<Movimentacao> Conta::Extrato(Date DataInit){
   }
   return ExtratoVector;
 }
+
 std::vector<Movimentacao> Conta::ExtratoMensal(){
   Date * DataHoje= new Date();
   DataHoje->SetToday();
   Date * DataInit= new Date(1,DataHoje->getMonth(),DataHoje->getYear());
   std::vector<Movimentacao> ExtratoVector;
-  // std::cout << " DEPURACAO TAMANHO VECTOR: " << movimentacoes.size() << std::endl;
   for (int i = 0; i < movimentacoes.size();i++){
     if (movimentacoes[i].getDate().InRange(*DataInit,*DataHoje)){ // Se a "linha" do vector, estiver dentro da range data, copiar essa "Linha" para um novo vector
       ExtratoVector.push_back(movimentacoes[i]);
@@ -86,6 +87,9 @@ std::vector<Movimentacao> Conta::ExtratoMensal(){
   // std::cout << "DEPURACAO, ANTES DO RETURN" << std::endl;
   return ExtratoVector;
 }
+
+
+
 
 void Conta::setNumConta(int nC){
   this->numConta = nC;

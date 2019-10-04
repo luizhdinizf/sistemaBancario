@@ -11,6 +11,7 @@ private:
 
 public:
   Interface(Banco *b);
+  ~Interface();
   void Menu();
   void CadastrarCliente();
   void MostrarClientes();
@@ -25,5 +26,7 @@ public:
   void CobrarCPMF();
   void MostrarSaldo();
   void ObterExtratoMensal();
+  void ObterExtratoInicial();
+  void ObterExtratoRange();
 };
 #endif

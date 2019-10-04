@@ -5,9 +5,12 @@
   Banco::Banco(std::string nB){
     this-> nomeBanco = nB;
   }
+
+  Banco::~Banco(){}
   std::string &Banco::getNome(){
     return nomeBanco;
   }
+
   int Banco::ProcurarPorCPF(std::string cpf_cnpj){ // retorna o numero do cliente pelo cpf
     int numCliente = -1;
     for(int i = 0; i < Clientes.size();i++){
@@ -19,6 +22,7 @@
     }
     return numCliente;
   }
+
   std::string Banco::RemoverCliente(std::string cpf_cnpj){ // BUG: Caso nao ache, vai retornar 0, resolucao, comecar NumCliente com -1, se for -1 cliente nao foi achado pelo cpf e nao apaga
     std::string nomeTemp;
     int numCliente = -1;
@@ -146,7 +150,7 @@
 
   void Banco::WriteToFile(){
     std::ofstream myfile;
-    myfile.open("example.csv", std::ofstream::out | std::ofstream::trunc);
+    myfile.open("DadosBanco.csv", std::ofstream::out | std::ofstream::trunc);
     myfile  << "sep=;" << std::endl;
     // << "ArquivoBancoELE078" << std::endl; // checar para ver se o arquivo é suportado
     for(int i = 0;i < Clientes.size();i++){
@@ -171,7 +175,7 @@
     }
   }
   void Banco::ReadFile(){
-    std::ifstream myfile("example.csv");
+    std::ifstream myfile("DadosBanco.csv");
     std::string linha;
 
     char nomeCliente[100], cpfCliente[100], enderecoCliente[100],foneCliente[100];
@@ -190,7 +194,7 @@
       while(getline(myfile,linha)){
         // std::cout << "LINHA: " << linha << std::endl;
         if(linha[0] != ';'){ // A linha é um cliente, cadastra-lo
-          sscanf(linha.c_str(),"%[^;];%[^;];%[^;];%[^;]",nomeCliente,cpfCliente,enderecoCliente,foneCliente);
+          std::sscanf(linha.c_str(),"%[^;];%[^;];%[^;];%[^;]",nomeCliente,cpfCliente,enderecoCliente,foneCliente);
           numCliente++;
           Banco::NovoCliente(new Cliente(nomeCliente,cpfCliente,enderecoCliente,foneCliente));
         }

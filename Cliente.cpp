@@ -13,6 +13,7 @@ Cliente::Cliente(std::string n, std::string c, std::string e, std::string f){
   this ->endereco = e;
   this ->fone = f;
 }
+Cliente::~Cliente(){}
 
 std::string Cliente::getNome(){
   return nomeCliente;

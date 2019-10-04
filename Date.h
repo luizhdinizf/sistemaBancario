@@ -12,6 +12,7 @@ private:
 public:
   Date();
   Date(int d, int m, int y);
+  ~Date();
   void SetToday();
   void VoltarSemana(Date* Dinit);
   int NumInterno();

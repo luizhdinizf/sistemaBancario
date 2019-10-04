@@ -20,6 +20,7 @@ private:
     public:
       Cliente();
       Cliente(std::string n, std::string c, std::string e, std::string f);
+      ~Cliente(); // Destrutor Cliente
       std::string getNome();
       std::string getCpf_cnpj();
       std::string getEndereco();

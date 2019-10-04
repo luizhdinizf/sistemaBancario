@@ -19,6 +19,7 @@ private:
 public:
   Conta(Cliente* c);
   Conta(Cliente* c,int nC);
+  ~Conta();
   void DebitarValor(double valor,std::string desc);
   void CreditarValor(double valor,std::string desc);
   void DebitarValor(double valor,std::string desc,Date d);

@@ -4,6 +4,8 @@
     counter++;
     Banco1 = b;
   }
+  Interface::~Interface(){}
+
   void Interface::Menu(){
     int selecao;
     std::cout << std::endl << "---======== Banco " << Banco1->getNome() << "========---" << std::endl
@@ -19,6 +21,8 @@
          << "9. Cobrar CPMF" << std::endl
          << "10. Mostrar Saldo" << std::endl
          << "11. Obter Extrato Mensal" << std::endl
+         << "12. Obter Extrato a partir de uma data" << std::endl
+         << "13. Obter Extrato entre 2 datas" << std::endl
          << "16. Mostrar Clientes" << std::endl
          << "17. Mostrar Contas" << std::endl
          << "18. Gravar Dados" << std::endl
@@ -58,6 +62,12 @@
         break;
       case(11):
         Interface::ObterExtratoMensal();
+        break;
+      case(12):
+        Interface::ObterExtratoInicial();
+        break;
+      case(13):
+        Interface::ObterExtratoRange();
         break;
       case(16):
         Interface::MostrarClientes();
@@ -309,8 +319,68 @@ void Interface::ObterExtratoMensal(){
                 << " Valor: " << Banco1->ExtratoMensal(numConta)[i].getValor()
                 << " Descricao: " << Banco1->ExtratoMensal(numConta)[i].getDescricao() << std::endl;
     }
+    std::cout << "Saldo: " << Banco1->getConta(numConta)->getSaldo() << std::endl;
   } else {
     std::cout << "Nº de conta informado não esta cadastrado na nossa base de dados, por favor insira um numero de conta válido." << std::endl;
 }
+  Interface::Menu();
+}
+
+void Interface::ObterExtratoInicial(){
+  int numConta;
+  std::string Data;
+  int day,month,year;
+  std::cout << "Digite o numero da conta: ";
+  std::cin >> numConta;
+  std::cout << "Digite a Data inicial para obter o extrato( Formato: 'xx/xx/xxxx')" <<std::endl;
+  std::cin >> Data;
+  std::sscanf(Data.c_str(),"%d/%d/%d",&day,&month,&year);
+  Date* Dinit = new Date(day,month,year);
+
+  if(Banco1->ExisteConta(numConta)){
+    for(int i = 0; i < Banco1->Extrato(numConta, *Dinit).size();i++){
+      std::cout << "Data: " << Banco1->Extrato(numConta, *Dinit)[i].getDate().StringData()
+                << " Tipo: " << Banco1->Extrato(numConta, *Dinit)[i].getDebitoCredito()
+                << " Valor: " << Banco1->Extrato(numConta, *Dinit)[i].getValor()
+                << " Descricao: " << Banco1->Extrato(numConta, *Dinit)[i].getDescricao() << std::endl;
+    }
+    std::cout << "Saldo: " << Banco1->getConta(numConta)->getSaldo() << std::endl;
+  } else {
+    std::cout << "Nº de conta informado não esta cadastrado na nossa base de dados, por favor insira um numero de conta válido." << std::endl;
+}
+delete Dinit;
+  Interface::Menu();
+}
+
+void Interface::ObterExtratoRange(){
+  int numConta;
+  std::string Data;
+  int day,month,year;
+  std::cout << "Digite o numero da conta: ";
+  std::cin >> numConta;
+  std::cout << "Digite a Data inicial para obter o extrato( Formato: 'xx/xx/xxxx')" <<std::endl;
+  std::cin >> Data;
+  std::sscanf(Data.c_str(),"%d/%d/%d",&day,&month,&year);
+  std::cout << "DIAMESANOINICIAL = " << day << month << year <<std::endl;
+  Date* Dinit = new Date(day,month,year);
+  std::cout << "Digite a Data Final para obter o extrato( Formato: 'xx/xx/xxxx')" <<std::endl;
+  std::cin >> Data;
+  std::sscanf(Data.c_str(),"%d/%d/%d",&day,&month,&year);
+  std::cout << "DIAMESANOFINAL = " << day << month << year <<std::endl;
+  Date* Dfinal = new Date(day,month,year);
+
+  if(Banco1->ExisteConta(numConta)){
+    for(int i = 0; i < Banco1->Extrato(numConta, *Dinit, *Dfinal).size();i++){
+      std::cout << "Data: " << Banco1->Extrato(numConta, *Dinit, *Dfinal)[i].getDate().StringData()
+                << " Tipo: " << Banco1->Extrato(numConta, *Dinit, *Dfinal)[i].getDebitoCredito()
+                << " Valor: " << Banco1->Extrato(numConta, *Dinit, *Dfinal)[i].getValor()
+                << " Descricao: " << Banco1->Extrato(numConta, *Dinit, *Dfinal)[i].getDescricao() << std::endl;
+    }
+    std::cout << "Saldo: " << Banco1->getConta(numConta)->getSaldo() << std::endl;
+  } else {
+    std::cout << "Nº de conta informado não esta cadastrado na nossa base de dados, por favor insira um numero de conta válido." << std::endl;
+}
+delete Dinit;
+delete Dfinal;
   Interface::Menu();
 }

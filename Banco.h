@@ -13,6 +13,7 @@ private:
 public:
   Banco();
   Banco(std::string nB);
+  ~Banco();
   std::string &getNome();
   int ProcurarPorCPF(std::string cpf_cnpj);
   std::string RemoverCliente(std::string cpf_cnpj);

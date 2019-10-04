@@ -13,6 +13,7 @@ private:
   double valor;
 public:
   Movimentacao(Date date, std::string d, char dC, double v);
+  ~Movimentacao();
   void setdataMov(int d, int m,int y);
   void setDescricao(std::string desc);
   void setDebitoCredito(char debCred);
